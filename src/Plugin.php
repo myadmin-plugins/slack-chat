@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class Plugin {
 
 	public static $name = 'Slack Plugin';
-	public static $description = 'Allows handling of Slack emails and honeypots';
+	public static $description = 'Allows handling of Slack Chat Bot Hooks';
 	public static $help = '';
 	public static $type = 'plugin';
 
