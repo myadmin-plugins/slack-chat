@@ -24,5 +24,5 @@ composer require detain/myadmin-slack-chat
 
 ## License
 
-The Slack handling plugin for MyAdmin class is licensed under the LGPL-v2 license.
+The Slack handling plugin for MyAdmin class is licensed under the LGPL-v2.1 license.
 
