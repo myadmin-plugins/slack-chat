@@ -1,5 +1,5 @@
 {
-	"name": "detain/slack-chat",
+	"name": "detain/myadmin-slack-chat",
 	"type": "myadmin-plugin",
 	"description": "Slack handling plugin for MyAdmin",
 	"keywords": [
