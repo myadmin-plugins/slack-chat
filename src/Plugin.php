@@ -54,10 +54,10 @@ class Plugin
 	public static function getRequirements(GenericEvent $event)
 	{
 		$loader = $event->getSubject();
-		$loader->add_requirement('class.Slack', '/../vendor/detain/myadmin-slack-chat/src/Slack.php');
-		$loader->add_requirement('deactivate_kcare', '/../vendor/detain/myadmin-slack-chat/src/abuse.inc.php');
-		$loader->add_requirement('deactivate_abuse', '/../vendor/detain/myadmin-slack-chat/src/abuse.inc.php');
-		$loader->add_requirement('get_abuse_licenses', '/../vendor/detain/myadmin-slack-chat/src/abuse.inc.php');
+		$loader->add_requirement('class.Slack', '/../vendor/detain/slack-chat/src/Slack.php');
+		$loader->add_requirement('deactivate_kcare', '/../vendor/detain/slack-chat/src/abuse.inc.php');
+		$loader->add_requirement('deactivate_abuse', '/../vendor/detain/slack-chat/src/abuse.inc.php');
+		$loader->add_requirement('get_abuse_licenses', '/../vendor/detain/slack-chat/src/abuse.inc.php');
 	}
 
 	/**
