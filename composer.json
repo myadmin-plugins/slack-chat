@@ -1,40 +1,47 @@
 {
 	"name": "detain/myadmin-slack-chat",
 	"type": "myadmin-plugin",
-	"description": "Slack handling plugin for MyAdmin",
+	"description": "Slack Chat Bot integration plugin for the MyAdmin control-panel framework. Provides event-driven hooks for Slack messaging, menu integration, and requirement loading.",
 	"keywords": [
-		"abuse",
-		"administration",
-		"spam"
+		"slack",
+		"chat",
+		"bot",
+		"myadmin",
+		"plugin",
+		"webhook",
+		"administration"
 	],
 	"license": "LGPL-2.1-only",
 	"authors": [
 		{
 			"name": "Joe Huss",
-			"homepage": "https:\/\/my.interserver.net\/"
+			"homepage": "https://my.interserver.net/"
 		}
 	],
 	"config": {
-		"bin-dir": "vendor\/bin",
-		"minimum-stability": "dev"
+		"bin-dir": "vendor/bin",
+		"minimum-stability": "dev",
+		"allow-plugins": {
+			"detain/myadmin-plugin-installer": true
+		}
 	},
 	"require": {
-		"php": ">=5.0.0",
+		"php": ">=8.2",
 		"ext-soap": "*",
-		"symfony/event-dispatcher": "^5.0@stable",
+		"symfony/event-dispatcher": "^5.0|^6.0|^7.0",
 		"detain/myadmin-plugin-installer": "dev-master"
-    },
+	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"phpunit/phpunit-mock-objects": "*",
-		"vlucas/phpdotenv": "*",
-		"codeclimate/php-test-reporter": "dev-master",
-		"satooshi/php-coveralls": "*",
-		"codacy/coverage": "dev-master"
+		"phpunit/phpunit": "^9.6"
 	},
 	"autoload": {
 		"psr-4": {
 			"Detain\\MyAdminSlack\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Detain\\MyAdminSlack\\Tests\\": "tests/"
 		}
 	}
 }
