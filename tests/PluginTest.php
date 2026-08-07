@@ -271,13 +271,25 @@ class PluginTest extends TestCase
     // ------------------------------------------------------------------
 
     /**
-     * getRequirements() must call add_requirement on the event subject.
+     * Every source registered via getRequirements() must resolve to a file that
+     * exists on disk, so that function_requirements() can actually require it.
+     *
+     * This replaces testGetRequirementsAddsRequirements() and
+     * testGetRequirementsPathsAreNonEmptyStrings(), which only ever inspected the
+     * registration table (the names registered, and that the paths were non-empty
+     * strings) and never the filesystem. They were green for years while every
+     * registration in this package pointed at a file that has never existed
+     * (src/Slack.php and src/abuse.inc.php), so they locked the bug in place.
+     *
+     * The registration table is now empty, so the loop body never runs and this test
+     * passes vacuously - which is correct: a package that registers nothing cannot
+     * register anything broken. It bites the moment a requirement is added back.
      *
      * Uses an anonymous class as a lightweight stub to avoid mocking vendor classes.
      *
      * @return void
      */
-    public function testGetRequirementsAddsRequirements(): void
+    public function testGetRequirementsRegistersOnlyExistingFiles(): void
     {
         $recorded = [];
 
@@ -307,46 +319,34 @@ class PluginTest extends TestCase
         $event = new GenericEvent($loader);
         Plugin::getRequirements($event);
 
-        $this->assertNotEmpty($recorded, 'getRequirements must register at least one requirement.');
+        $packageRoot = dirname(__DIR__);
+        $marker = '/vendor/detain/myadmin-slack-chat/';
+        $missing = [];
 
-        $names = array_column($recorded, 0);
-        $this->assertContains('class.Slack', $names);
-        $this->assertContains('deactivate_kcare', $names);
-        $this->assertContains('deactivate_abuse', $names);
-        $this->assertContains('get_abuse_licenses', $names);
-    }
-
-    /**
-     * Every path registered via getRequirements() must be a non-empty string.
-     *
-     * @return void
-     */
-    public function testGetRequirementsPathsAreNonEmptyStrings(): void
-    {
-        $recorded = [];
-
-        $loader = new class ($recorded) {
-            /** @var array<int, array{0: string, 1: string}> */
-            private array $recorded;
-
-            public function __construct(array &$recorded)
-            {
-                $this->recorded = &$recorded;
+        foreach ($recorded as [$name, $source]) {
+            $candidates = [];
+            // How MyAdmin resolves it: INCLUDE_ROOT . '/' . $source, with INCLUDE_ROOT
+            // being <project>/include when this package sits in <project>/vendor.
+            $candidates[] = dirname($packageRoot, 3) . '/include/' . ltrim($source, '/');
+            // Same target, resolved without needing an installed parent project, so the
+            // suite is meaningful when this repo is checked out standalone.
+            $offset = strpos($source, $marker);
+            if ($offset !== false) {
+                $candidates[] = $packageRoot . '/' . substr($source, $offset + strlen($marker));
             }
+            $candidates[] = $packageRoot . '/' . ltrim($source, '/');
 
-            public function add_requirement(string $name, string $path): void
-            {
-                $this->recorded[] = [$name, $path];
+            if (array_filter($candidates, 'is_file') === []) {
+                $missing[] = "{$name} => {$source}";
             }
-        };
-
-        $event = new GenericEvent($loader);
-        Plugin::getRequirements($event);
-
-        foreach ($recorded as [$name, $path]) {
-            $this->assertIsString($path, "Path for '{$name}' must be a string.");
-            $this->assertNotEmpty($path, "Path for '{$name}' must not be empty.");
         }
+
+        $this->assertSame(
+            [],
+            $missing,
+            'Every requirement registered by getRequirements() must name a source file that exists on disk; '
+            . 'function_requirements() would fatal on these.'
+        );
     }
 
     // ------------------------------------------------------------------
