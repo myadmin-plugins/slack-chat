@@ -1,6 +1,6 @@
 ---
 name: phpunit-test
-description: Writes PHPUnit tests for `src/Plugin.php` following the ReflectionClass-based pattern in `tests/PluginTest.php`. Use when user says 'add test', 'write test', 'test this method', or 'test coverage'. Covers method signature assertions (public/static/parameter count/type), static property assertions, hook registration validation, and behavior tests with anonymous-class stubs. Do NOT use for non-Plugin test subjects or for testing classes outside `src/Plugin.php`. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Writes PHPUnit tests for `src/Plugin.php` following the ReflectionClass-based pattern in `tests/PluginTest.php`. Use when user says 'add test', 'write test', 'test this method', or 'test coverage'. Covers method signature assertions (public/static/parameter count/type), static property assertions, hook registration validation, and behavior tests with anonymous-class stubs. Do NOT use for non-Plugin test subjects or for testing classes outside `src/Plugin.php`. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file

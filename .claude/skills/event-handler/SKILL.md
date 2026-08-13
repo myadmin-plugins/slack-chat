@@ -1,6 +1,6 @@
 ---
 name: event-handler
-description: Implements a GenericEvent static handler method on Plugin in src/Plugin.php. Use when user says 'add method', 'implement handler', 'add getMenu logic', 'handle settings', or 'register hook'. Follows $event->getSubject() pattern with correct void return type and tab indentation. Do NOT use for non-event methods, new plugin creation, or standalone classes. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Implements a GenericEvent static handler method on Plugin in src/Plugin.php. Use when user says 'add method', 'implement handler', 'add getMenu logic', 'handle settings', or 'register hook'. Follows $event->getSubject() pattern with correct void return type and tab indentation. Do NOT use for non-event methods, new plugin creation, or standalone classes. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
